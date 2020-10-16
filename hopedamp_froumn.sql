@@ -52,7 +52,6 @@ CREATE TABLE `comment`  (
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (27, 18, 7, '<p>温某因疫情封村后，因为太无聊竟上山打野味</p><p>据传言， 该温姓男子是宿迁市传智专修学院全栈班的一名学生&nbsp;<img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/3c/pcmoren_wu_org.png\" alt=\"[污]\" data-w-e=\"1\" style=\"font-size: 16px;\"><br></p>', '2020-02-17 15:34:21');
 INSERT INTO `comment` VALUES (36, 29, 7, '<p><img src=\"https://ww4.sinaimg.cn/bmiddle/00719yt0ly1gbz8k5wpsnj30ku0v2jvs.jpg\">&nbsp;&nbsp;<br></p>', '2020-02-17 16:38:00');
 INSERT INTO `comment` VALUES (37, 29, 7, '<p><img src=\"https://ww1.sinaimg.cn/bmiddle/9db08397ly1gbz8nynm3rj20c709nahy.jpg\">&nbsp;&nbsp;<br></p>', '2020-02-17 16:38:23');
 INSERT INTO `comment` VALUES (38, 29, 7, '<p><img src=\"https://ww1.sinaimg.cn/bmiddle/9db08397ly1gbz8o1r870j20dr0feakg.jpg\">&nbsp;&nbsp;<br></p>', '2020-02-17 16:38:37');
@@ -169,7 +168,7 @@ CREATE TABLE `topic`  (
 -- ----------------------------
 -- Records of topic
 -- ----------------------------
-INSERT INTO `topic` VALUES (18, '震惊！！贵州毕节某温姓男子上山捕杀果子狸', 5, 7, '2020-02-17 15:31:26', '<p><img src=\"http://wclt-lf.oss-cn-hangzhou.aliyuncs.com/my_froumn/kaizi666.jpg\" style=\"max-width:100%;\"><br></p>', 1);
+INSERT INTO `topic` VALUES (18, '震惊！！贵州毕节某温姓男子上山捕杀果子狸', 5, 7, '2020-02-17 15:31:26', '<p><img src=\"http://wclt-lf.oss-cn-hangzhou.aliyuncs.com/my_froumn/kaizi666.jpg\" style=\"max-width:100%;\"><br></p>', 0);
 INSERT INTO `topic` VALUES (20, '武汉将必须开放的公共场所设置为扫码出入', 1, 1, '2020-02-17 16:14:48', '<p>2月16日，武汉市新冠肺炎疫情防控指挥部发布通告，称将进一步加强公共场所疫情防控工作。措施包括：市内文化、体育、旅游等公共场所暂不开放、宗教场所暂停对外开放；必须开放的公共场所实行扫码入出管理；实行零售药店购药登记制度；严格公共场所卫生管理；严格公共场所疫情处置等。&nbsp;&nbsp;<br></p><p><img src=\"https://ww3.sinaimg.cn/bmiddle/a716fd45ly1gbyzi5cnkfj20to13yn97.jpg\" style=\"max-width:100%;\"><br></p>', 0);
 INSERT INTO `topic` VALUES (21, '中国治蝗全军出击', 2, 1, '2020-02-17 16:17:13', '<p>在中国肆虐了三千年的蝗灾能在几十年内被整治成现在的状态，背后其实是无数农业人的默默付出……&nbsp;&nbsp;<br></p><p><img src=\"https://ww4.sinaimg.cn/bmiddle/b8b73ba1ly1gbzdcn1vt0j20u05lbhdt.jpg\">&nbsp;&nbsp;<br></p>', 0);
 INSERT INTO `topic` VALUES (22, '当父母得知你要复工后', 1, 1, '2020-02-17 16:20:08', '<p><img src=\"https://ww1.sinaimg.cn/bmiddle/6ea67c04ly1gbzgnpj4xwj20c80bzdj9.jpg\">&nbsp;&nbsp;<br></p><p><img src=\"https://ww4.sinaimg.cn/bmiddle/6ea67c04ly1gbzgnkqth3j20c80ubjwf.jpg\">&nbsp;&nbsp;<br></p><p><img src=\"https://ww1.sinaimg.cn/bmiddle/6ea67c04ly1gbzgnmvgngj20c80ufae9.jpg\">&nbsp;&nbsp;<br></p><p><img src=\"https://ww3.sinaimg.cn/bmiddle/6ea67c04ly1gbzgnseo1rj20c80xgdlt.jpg\">&nbsp;&nbsp;<br></p>', 0);
@@ -180,7 +179,7 @@ INSERT INTO `topic` VALUES (30, '暴雪两大IP将打造动画剧集', 1, 7, '20
 INSERT INTO `topic` VALUES (31, '北大课题组最新研究提示：新型冠状病毒中间宿主或为水貂', 1, 7, '2020-02-17 16:44:17', '<p>新京报快讯（记者 许雯）新型冠状病毒的传染源至今未明。北京大学工学院生物医学工程系教授朱怀球团队1月24日发表的研究文章提示，蝙蝠和水貂可能是新型冠状病毒的两个潜在宿主，其中水貂可能为中间宿主。&nbsp;</p><p>上述研究文章题为“深度学习算法预测新型冠状病毒的宿主和感染性”，发表于bioRxiv预印版平台，研究使用的是基于深度学习算法开发的VHP（病毒宿主预测）方法，用以预测新型冠状病毒潜在宿主。</p><p>研究提示，与感染其他脊椎动物的冠状病毒相比，蝙蝠SARS样冠状病毒与新型冠状病毒具有更相似的感染模式。此外，通过比较所有宿主在脊椎动物上的病毒传染模式，发现水貂病毒的传染性模式更接近新型冠状病毒。</p><p>这说明，蝙蝠和水貂可能是新型冠状病毒的两个潜在宿主。</p><p>病毒感染力方面，朱怀球团队研究表明，新型冠状病毒的6个基因组都极有可能感染人类。预测结果提示，新型冠状病毒具有与严重急性呼吸综合征冠状病毒（SARS-CoV）、蝙蝠SARS样冠状病毒（Bat SARS-like CoV）和中东呼吸综合征冠状病毒（MERS-CoV）类似的感染人类的强大潜力。</p>', 0);
 INSERT INTO `topic` VALUES (32, '奥（ yue ）利给！广东人民做防控，这么有个性！', 5, 7, '2020-02-17 16:45:51', '<p>你可能不知道，<br></p><p>广东人民做防控，</p><p>做得这么温暖高效。</p><p>肇庆人民是这么干的——</p><p><img src=\"https://r.sinaimg.cn/large/tc/news_ycwb_com/289c611d8f939dd68e396ef6fa1d78ff.jpeg\">&nbsp;&nbsp;<br></p>', 1);
 INSERT INTO `topic` VALUES (33, '三部门发布公告：全国禁止野生动物交易', 1, 7, '2020-02-17 16:52:09', '<p>为严防新型冠状病毒感染的肺炎疫情，阻断可能的传染源和传播途径，市场监管总局、农业农村部、国家林草局决定，自本公告发布之日起至全国疫情解除期间，禁止野生动物交易活动。 一、各地饲养繁育野生动物场所实施隔离，严禁野生动物对外扩散和转运贩卖。</p><p>&nbsp;二、各地农（集）贸市场、超市、餐饮单位、电商平台等经营场所，严禁任何形式的野生动物交易活动。</p><p>&nbsp;三、社会各界发现违法违规交易野生动物的，可通过 12315 热线或平台举报。</p><p>&nbsp;四、各地各相关部门要加强检查，发现有违反本公告规定的，要依法依规严肃查处，对经营者、经营场所分别予以停业整顿、查封，涉嫌犯罪的，移送公安机关。&nbsp;</p><p>五、消费者要充分认识食用野生动物的健康风险，远离“野味”，健康饮食。 市场监管总局 农业农村部 国家林草局 2020年1月26日 （原题为《市场监管总局 农业农村部 国家林草局关于禁止野生动物交易的公告》）</p>', 1);
-INSERT INTO `topic` VALUES (34, '望潮论坛正式发布啦', 1, 1, '2020-03-04 15:43:20', '<p>开发历时2星期</p>', 1);
+INSERT INTO `topic` VALUES (34, '望潮论坛正式发布啦', 1, 1, '2020-03-04 15:43:20', '<p>开发历时2星期</p>', 0);
 
 -- ----------------------------
 -- Table structure for user
