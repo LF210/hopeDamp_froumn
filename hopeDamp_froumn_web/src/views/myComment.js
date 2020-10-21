@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 // 引入分页和回到顶部组件
-import { Pagination, BackTop, message } from "antd";
+import { Pagination, BackTop } from "antd";
 // 引入格式化时间的函数
 import { timeFormat } from "./publicFunc";
 
@@ -46,8 +46,6 @@ export default class myComment extends Component {
             commentData: res.data.reverse(),
             total: res.total
           });
-        } else {
-          message.error(res.msg);
         }
       });
   };

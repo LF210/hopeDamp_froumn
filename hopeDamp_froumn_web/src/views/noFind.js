@@ -1,3 +1,9 @@
+/*
+ * @Author: LF
+ * @Description: 404页
+ * @Date: 2020-10-21 08:38:38
+ * @LastEditTime: 2020-10-21 15:03:58
+ */
 import React, { Component } from "react";
 import "../static/noFind.css";
 import { Button } from "antd";

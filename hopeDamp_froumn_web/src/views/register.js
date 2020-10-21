@@ -1,3 +1,9 @@
+/*
+ * @Author: LF
+ * @Description: 注册页
+ * @Date: 2020-10-21 08:38:38
+ * @LastEditTime: 2020-10-21 15:04:18
+ */
 import React, { Component } from "react";
 // 引入信息提示框
 import { message } from "antd";

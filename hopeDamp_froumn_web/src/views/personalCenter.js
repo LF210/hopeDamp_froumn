@@ -1,3 +1,9 @@
+/*
+ * @Author: LF
+ * @Description: 个人中心页
+ * @Date: 2020-10-21 08:38:38
+ * @LastEditTime: 2020-10-21 15:04:06
+ */
 import React, { Component } from "react";
 import axios from "axios";
 // 引入上传图片，ICON图标，提醒框，确认框组件

@@ -1,3 +1,9 @@
+/*
+ * @Author: LF
+ * @Description: 我的消息页
+ * @Date: 2020-10-21 08:38:38
+ * @LastEditTime: 2020-10-21 15:03:50
+ */
 /* eslint-disable */
 import React, { Component } from "react";
 import axios from "axios";
