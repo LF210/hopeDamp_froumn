@@ -1,3 +1,9 @@
+/*
+ * @Author: LF
+ * @Description: 我发布的页
+ * @Date: 2020-10-21 08:38:38
+ * @LastEditTime: 2020-10-23 09:19:11
+ */
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Pagination, Button, Modal, message } from 'antd'
@@ -25,28 +31,21 @@ export default class myPublish extends Component {
         this.getFroumnData()
     }
 
-    /**
-     * 获取用户个人发布话题数据
-     * @pageNum 查询页码
-     * @pageSize 每页查询条数
-     */
-    getFroumnData = (pageNum = 1, pageSize = 10) => {
-        axios
-            .get('/topicUserMsg', {
-                params: {
-                    pageNum,
-                    pageSize
-                }
+    //   获取用户个人发布话题数据
+    getFroumnData = async (pageNum = 1, pageSize = 10) => {
+        let { data: res } = await axios.get('/topicUserMsg', {
+            params: {
+                pageNum,
+                pageSize
+            }
+        })
+        if (res.ok === 1) {
+            // 成功获取数据则更新页面
+            this.setState({
+                froumnData: res.data,
+                total: res.total
             })
-            .then(({ data: res }) => {
-                if (res.ok === 1) {
-                    // 成功获取数据则更新页面
-                    this.setState({
-                        froumnData: res.data,
-                        total: res.total
-                    })
-                }
-            })
+        }
     }
 
     // 页码改变时重新获取数据
@@ -55,16 +54,15 @@ export default class myPublish extends Component {
     }
 
     // 修改话题
-    changeTopic = (id) => {
-        axios.get('/topicNormalMsg', { params: { id } }).then(({ data: res }) => {
-            if (res.ok === 1) {
-                sessionStorage.setItem('edit-title', res.data.title)
-                sessionStorage.setItem('edit-classify_id', res.data.classify_id)
-                sessionStorage.setItem('edit-value', res.data.value)
-                sessionStorage.setItem('edit-id', res.data.id)
-                window.location.href = '/publish'
-            }
-        })
+    changeTopic = async (id) => {
+        let { data: res } = await axios.get('/topicNormalMsg', { params: { id } })
+        if (res.ok === 1) {
+            sessionStorage.setItem('edit-title', res.data.title)
+            sessionStorage.setItem('edit-classify_id', res.data.classify_id)
+            sessionStorage.setItem('edit-value', res.data.value)
+            sessionStorage.setItem('edit-id', res.data.id)
+            window.location.href = '/publish'
+        }
     }
 
     // 删除话题
@@ -74,17 +72,16 @@ export default class myPublish extends Component {
             okText: '确认',
             cancelText: '取消',
             title: '确认要删除话题吗，操作不可逆转！',
-            onOk: () => {
+            onOk: async () => {
                 // 用户确认删除后发送请求，根据话题id删除话题
-                axios.delete('/topic', { params: { id } }).then(({ data: res }) => {
-                    if (res.ok === 1) {
-                        // 成功后重新获取数据并提醒用户
-                        this.getFroumnData()
-                        message.success('删除成功!')
-                    } else {
-                        message.error('删除失败！')
-                    }
-                })
+                let { data: res } = await axios.delete('/topic', { params: { id } })
+                if (res.ok === 1) {
+                    // 成功后重新获取数据并提醒用户
+                    this.getFroumnData()
+                    message.success('删除成功!')
+                } else {
+                    message.error('删除失败！')
+                }
             }
         })
     }

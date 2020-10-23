@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 发布页
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-21 14:59:37
+ * @LastEditTime: 2020-10-23 09:40:19
  */
 import React, { Component } from 'react'
 import { message, Modal } from 'antd'
@@ -152,19 +152,18 @@ export default class publish extends Component {
         this.getAllClassify()
     }
     // 请求所有话题分类
-    getAllClassify = () => {
-        axios.get('/classify').then(({ data: res }) => {
-            if (res.ok === 1) {
-                let arr = [{ id: 'default', name: '---请选择---' }]
-                arr = arr.concat(res.result)
-                this.setState({
-                    classify_arr: arr
-                })
-            }
-        })
+    getAllClassify = async () => {
+        let { data: res } = await axios.get('/classify')
+        if (res.ok === 1) {
+            let arr = [{ id: 'default', name: '---请选择---' }]
+            arr = arr.concat(res.result)
+            this.setState({
+                classify_arr: arr
+            })
+        }
     }
     // 发布话题
-    publishClick = () => {
+    publishClick = async () => {
         if (this.state.btnDisable === 1) {
             return false
         }
@@ -177,53 +176,47 @@ export default class publish extends Component {
         }
         if (this.state.publishType === 0) {
             // 发布新话题
-            axios
-                .post('/topic', {
-                    title: this.state.title,
-                    classify_id: this.state.classify,
-                    create_time: timeFormat(new Date()),
-                    value: this.state.value
+            let { data: res } = await axios.post('/topic', {
+                title: this.state.title,
+                classify_id: this.state.classify,
+                create_time: timeFormat(new Date()),
+                value: this.state.value
+            })
+            if (res.ok === 1) {
+                message.success('发布话题成功！')
+                localStorage.clear()
+                // 禁用发布按钮，防止多次点击发布导致多次发布
+                this.setState({
+                    btnDisable: 1
                 })
-                .then(({ data: res }) => {
-                    if (res.ok === 1) {
-                        message.success('发布话题成功！')
-                        localStorage.clear()
-                        // 禁用发布按钮，防止多次点击发布导致多次发布
-                        this.setState({
-                            btnDisable: 1
-                        })
-                        setTimeout(() => {
-                            window.location.href = '/'
-                        }, 1000)
-                    } else {
-                        message.error(res.msg)
-                    }
-                })
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 1000)
+            } else {
+                message.error(res.msg)
+            }
         } else {
             // 修改话题
-            axios
-                .put('/topic', {
-                    id: sessionStorage.getItem('edit-id'),
-                    title: this.state.title,
-                    classify_id: this.state.classify,
-                    value: this.state.value
+            let { data: res } = await axios.put('/topic', {
+                id: sessionStorage.getItem('edit-id'),
+                title: this.state.title,
+                classify_id: this.state.classify,
+                value: this.state.value
+            })
+            if (res.ok === 1) {
+                message.success('修改成功！')
+                sessionStorage.removeItem('edit-title')
+                sessionStorage.removeItem('edit-classify_id')
+                sessionStorage.removeItem('edit-value')
+                sessionStorage.removeItem('edit-id')
+                // 禁用发布按钮，防止多次点击发布导致多次发布
+                this.setState({
+                    btnDisable: 1
                 })
-                .then(({ data: res }) => {
-                    if (res.ok === 1) {
-                        message.success('修改成功！')
-                        sessionStorage.removeItem('edit-title')
-                        sessionStorage.removeItem('edit-classify_id')
-                        sessionStorage.removeItem('edit-value')
-                        sessionStorage.removeItem('edit-id')
-                        // 禁用发布按钮，防止多次点击发布导致多次发布
-                        this.setState({
-                            btnDisable: 1
-                        })
-                        setTimeout(() => {
-                            window.location.href = '/myPublish'
-                        }, 1000)
-                    }
-                })
+                setTimeout(() => {
+                    window.location.href = '/myPublish'
+                }, 1000)
+            }
         }
     }
 
@@ -270,12 +263,6 @@ export default class publish extends Component {
                                         }
                                     }}
                                 >
-                                    {/* <option value="default">---请选择--</option>
-                                    <option value="1">前端</option>
-                                    <option value="2">后端</option>
-                                    <option value="3">Android</option>
-                                    <option value="4">大数据</option>
-                                    <option value="5">人工智能</option> */}
                                     {classify}
                                 </select>
                                 <h3>正文</h3>

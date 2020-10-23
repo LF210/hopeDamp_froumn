@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 首页
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-21 14:59:28
+ * @LastEditTime: 2020-10-23 09:04:29
  */
 import React, { Component } from 'react'
 import axios from 'axios'
@@ -24,6 +24,10 @@ export default class home extends Component {
             total: 0
         }
     }
+    // 跳转到某个地址
+    navigationTo = (url) => {
+        window.location.href = url
+    }
 
     // 页码改变时重新获取数据
     changePage = (pageNum, pageSize) => {
@@ -31,39 +35,37 @@ export default class home extends Component {
     }
 
     // 请求论坛数据
-    getFroumnData = (pageNum = 1, pageSize = 10, classify_id) => {
+    getFroumnData = async (pageNum = 1, pageSize = 10, classify_id) => {
         // 根据路由参数id来获取数据
         classify_id = this.props.match.params.id || ''
         // 发送请求，根据参数获取多条话题数据
-        axios
-            .get('/topic', {
-                params: {
-                    pageNum,
-                    pageSize,
-                    classify_id
-                }
+        let { data: res } = await axios.get('/topic', {
+            params: {
+                pageNum,
+                pageSize,
+                classify_id
+            }
+        })
+        if (res.ok === 1) {
+            // 获取数据成功后更新页面
+            this.setState({
+                froumnData: res.data,
+                total: res.total
             })
-            .then(({ data: res }) => {
-                if (res.ok === 1) {
-                    // 获取数据成功后更新页面
-                    this.setState({
-                        froumnData: res.data,
-                        total: res.total
-                    })
-                } else {
-                    // 如果路由参数id非数字则跳转到404页面
-                    window.location.href = '/nofind'
-                }
-            })
+        } else {
+            // 如果路由参数id非数字则跳转到404页面
+            this.navigationTo('/nofind')
+        }
     }
 
     componentDidMount() {
-        // 请求首屏数据
+        // 页面挂载后请求首屏数据
         this.getFroumnData()
     }
+
     render() {
         const froumnData = []
-        // 循环论坛数据，用于渲染页面
+        // 如果该分类下暂无话题数据
         if (this.state.froumnData.length === 0) {
             froumnData.push(
                 <div className="froumn-empty" key="empty">
@@ -71,16 +73,12 @@ export default class home extends Component {
                 </div>
             )
         } else {
+            // 如果有话题数据，则循环论坛数据，用于渲染页面
             this.state.froumnData.forEach((item, index) => {
                 froumnData.push(
                     <div className="froumn-HomeBox" key={index}>
                         <div key={index} className="froumn-box">
-                            <div
-                                className="froumn-title"
-                                onClick={() => {
-                                    window.location.href = '/topic/' + item.id
-                                }}
-                            >
+                            <div className="froumn-title" onClick={() => this.navigationTo('/topic/' + item.id)}>
                                 {item.title}
                             </div>
                             <div className="froumn-msg">

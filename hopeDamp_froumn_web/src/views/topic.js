@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 话题详情页
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-21 17:35:31
+ * @LastEditTime: 2020-10-23 08:58:18
  */
 /* eslint-disable */
 import React, { Component } from 'react'
@@ -91,73 +91,78 @@ export default class topic extends Component {
     }
 
     // 获取话题具体数据
-    getTopicData = () => {
-        axios
-            .get('/topicMsg', {
-                params: { id: this.props.match.params.id }
+    getTopicData = async () => {
+        let { data: res } = await axios.get('/topicMsg', {
+            params: { id: this.props.match.params.id }
+        })
+        if (res.ok === 1) {
+            this.setState({
+                topicData: res.data,
+                comment: res.comment
             })
-            .then(({ data: res }) => {
-                if (res.ok === 1) {
-                    this.setState({
-                        topicData: res.data,
-                        comment: res.comment
-                    })
-                }
-            })
+        }
     }
 
     // 提交评论
-    commentSubmit = () => {
+    commentSubmit = async () => {
+        // 表单校验
         if (this.state.comment_value.trim() === '') {
             return message.error('不能提交空评论！')
         }
-        axios
-            .post('/comment', {
-                topic_id: this.props.match.params.id,
-                value: this.state.comment_value,
-                create_time: timeFormat(new Date())
+        // 发起提交评论请求
+        let { data: res } = await axios.post('/comment', {
+            topic_id: this.props.match.params.id,
+            value: this.state.comment_value,
+            create_time: timeFormat(new Date())
+        })
+        // 提交评论成功后
+        if (res.ok === 1) {
+            // 重新获取页面数据
+            this.getTopicData()
+            // 将评论框的内容置空
+            document.querySelector('.w-e-text').innerHTML = ''
+            // 将state数据中的评论置空
+            this.setState({
+                comment_value: ''
             })
-            .then(({ data: res }) => {
-                if (res.ok === 1) {
-                    // 提交评论成功后重新获取页面数据
-                    // window.location.reload()
-                    this.getTopicData()
-                    document.querySelector('.w-e-text').innerHTML = ''
-                    this.state.comment_value = ''
-                } else {
-                    message.error(res.msg)
-                }
-            })
+        } else {
+            message.error(res.msg)
+        }
     }
 
     // 删除评论
     delComment = (id) => {
+        // 删除前的确认
         confirm({
             okText: '确认',
             cancelText: '取消',
             title: '确定要删除评论吗？',
-            onOk: () => {
-                axios.delete('/comment', { params: { id } }).then(({ data: res }) => {
-                    console.log(res)
-                    if (res.ok === 1) {
-                        this.getTopicData()
-                        message.success('删除成功')
-                    }
-                })
+            // 确认删除后
+            onOk: async () => {
+                // 发起请求
+                let { data: res } = await axios.delete('/comment', { params: { id } })
+                // 删除评论成功后
+                if (res.ok === 1) {
+                    // 重新获取数据
+                    this.getTopicData()
+                    // 提示成功
+                    message.success('删除成功')
+                }
             }
         })
     }
 
     // 创建私聊房间
-    createRoom = () => {
-        axios.post('/room', { collect_user_id: this.state.collect_user_id }).then(({ data: res }) => {
-            if (res.ok === 1) {
-                if (res.data) {
-                    sessionStorage.setItem('chatingUser', JSON.stringify(res.data))
-                }
-                window.location.href = '/myMessage'
-            }
-        })
+    createRoom = async () => {
+        // 发起请求获取聊天对象的信息
+        let { data: res } = await axios.post('/room', { collect_user_id: this.state.collect_user_id })
+        // 请求成功后
+        if (res.ok === 1 && res.data) {
+            // 在浏览器存储聊天对象的信息，到了聊天页后取出，即可直接显示与该聊天对象的对话框
+            sessionStorage.setItem('chatingUser', JSON.stringify(res.data))
+            // 随后跳转到聊天页
+            window.location.href = '/myMessage'
+        }
     }
 
     render() {
@@ -194,7 +199,6 @@ export default class topic extends Component {
                                 </span>
                             </Popover>
                         )}
-
                         <span>{timeFormat(item.create_time)}</span>
                         <span>{index + 1}</span>
                     </div>
@@ -223,10 +227,6 @@ export default class topic extends Component {
                                 {sessionStorage.getItem('token') && this.state.topicData.author_id === jwt.decode(sessionStorage.getItem('token')).id && (
                                     <span>{this.state.topicData.username}</span>
                                 )}
-                                {/* {this.state.topicData.author_id ===
-                  jwt.decode(sessionStorage.getItem("token")).id && (
-                  <span>{this.state.topicData.username}</span>
-                )} */}
                                 {sessionStorage.getItem('token') && this.state.topicData.author_id !== jwt.decode(sessionStorage.getItem('token')).id && (
                                     <Popover content={author_content} trigger="click">
                                         <span

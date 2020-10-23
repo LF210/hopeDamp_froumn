@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 版头
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-21 15:00:46
+ * @LastEditTime: 2020-10-23 09:35:46
  */
 import React, { Component } from 'react'
 import jwt from 'jsonwebtoken'
@@ -21,18 +21,17 @@ export default class top extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // 页面挂载后判断：如果浏览器中存在token，则表明用户已登录，需要向服务器请求用户数据
         if (sessionStorage.getItem('token')) {
-            axios.get('/userData').then(({ data: res }) => {
-                if (res.ok === 1) {
-                    this.setState({
-                        userData: res.data
-                    })
-                } else {
-                    message.error(res.msg)
-                }
-            })
+            let { data: res } = await axios.get('/userData')
+            if (res.ok === 1) {
+                this.setState({
+                    userData: res.data
+                })
+            } else {
+                message.error(res.msg)
+            }
         }
         // 请求网页标题数据
         this.getWebTitle()
@@ -40,31 +39,29 @@ export default class top extends Component {
         this.getAllClassify()
     }
     // 请求所有频道
-    getAllClassify = () => {
-        axios.get('/classify').then(({ data: res }) => {
-            if (res.ok === 1) {
-                let arr = [
-                    {
-                        id: '',
-                        name: '推荐'
-                    }
-                ]
-                arr = arr.concat(res.result)
-                this.setState({
-                    classify: arr
-                })
-            }
-        })
+    getAllClassify = async () => {
+        let { data: res } = await axios.get('/classify')
+        if (res.ok === 1) {
+            let arr = [
+                {
+                    id: '',
+                    name: '推荐'
+                }
+            ]
+            arr = arr.concat(res.result)
+            this.setState({
+                classify: arr
+            })
+        }
     }
     // 请求网页标题数据
-    getWebTitle = () => {
-        axios.get('/web_style').then(({ data: res }) => {
-            if (res.ok === 1) {
-                this.setState({
-                    web_title: res.data.web_title
-                })
-            }
-        })
+    getWebTitle = async () => {
+        let { data: res } = await axios.get('/web_style')
+        if (res.ok === 1) {
+            this.setState({
+                web_title: res.data.web_title
+            })
+        }
     }
     render() {
         const menu = (
