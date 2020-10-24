@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 登录页
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-23 09:11:01
+ * @LastEditTime: 2020-10-24 09:52:04
  */
 import React, { Component } from 'react'
 // 引入消息提示框
@@ -34,6 +34,10 @@ export default class login extends Component {
         // 如果登录失败，则提示错误信息
         if (res.ok !== 1) {
             return message.error(res.msg || '发生了一些错误')
+        }
+        // 如果发现有新消息
+        else if (res.ok === 1 && res.msgNum !== 0) {
+            message.info(`您有${res.msgNum}条新消息，请到我的消息页查看！`)
         }
         // 提示用户登录成功
         message.success(res.msg)

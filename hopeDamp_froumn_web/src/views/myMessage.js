@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 我的消息页
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-23 09:16:53
+ * @LastEditTime: 2020-10-24 17:10:51
  */
 /* eslint-disable */
 import React, { Component } from 'react'
@@ -94,6 +94,7 @@ export default class myMessage extends Component {
         // 获取所有历史聊天用户
         axios.get('/room').then(({ data: res }) => {
             if (res.ok === 1) {
+                console.log(res)
                 // 同步数据
                 this.setState({
                     historyChatUser: res.data
@@ -135,15 +136,14 @@ export default class myMessage extends Component {
         )
     }
 
-    // 获取聊天纪录
-    getChatHistoryMsg = (id) => {
-        axios.get('/roomMsg', { params: { room_id: id } }).then(({ data: res }) => {
-            if (res.ok === 1) {
-                this.setState({
-                    chatMsg: res.data
-                })
-            }
-        })
+    // 获取聊天纪录,并将所有聊天记录设置为已查看
+    getChatHistoryMsg = async (id) => {
+        let { data: res } = await axios.get('/roomMsg', { params: { room_id: id } })
+        if (res.ok === 1) {
+            this.setState({
+                chatMsg: res.data
+            })
+        }
     }
 
     // 发送消息
@@ -210,7 +210,6 @@ export default class myMessage extends Component {
                                 )}
                             </div>
                             <div className="chatUserBox-msg">
-                                {/* <div className="chat-username">{item.username}</div> */}
                                 <div
                                     className="chat-value"
                                     dangerouslySetInnerHTML={{
@@ -230,7 +229,6 @@ export default class myMessage extends Component {
                                 )}
                             </div>
                             <div className="chatUserBox-msg">
-                                {/* <div className="chat-username">{item.username}</div> */}
                                 <div
                                     className="chat-value"
                                     dangerouslySetInnerHTML={{

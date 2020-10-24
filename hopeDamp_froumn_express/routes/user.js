@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 用户相关路由
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-21 16:50:07
+ * @LastEditTime: 2020-10-24 09:51:01
  */
 // 创建路由
 const userRouter = require('express').Router()
@@ -25,11 +25,28 @@ userRouter.post('/login', (req, res) => {
         if (result.length !== 0) {
             // 生成令牌
             let token = jwt.sign({ id: result[0].id, username: result[0].username }, md5, { expiresIn: '6h' })
-            // 将令牌和登录成功消息发送到浏览器
-            res.json({
-                ok: 1,
-                msg: '登录成功！',
-                token: token
+            // 登录成功后查询是否有未查看的聊天消息
+            let sql = 'SELECT * FROM private_chat WHERE collect_user_id = ? AND is_seen = 0'
+            let data = [result[0].id]
+            db.query(sql, data, (err, result) => {
+                if (err) console.log(err)
+                // 如果发现离线期间有人发送消息过来，则提醒用户
+                if (result.length !== 0) {
+                    res.json({
+                        ok: 1,
+                        msg: '登录成功！',
+                        token: token,
+                        msgNum: result.length
+                    })
+                } else {
+                    // 如果离线期间没有消息发过来
+                    res.json({
+                        ok: 1,
+                        msg: '登录成功！',
+                        token: token,
+                        msgNum: 0
+                    })
+                }
             })
         } else {
             res.json({
@@ -55,7 +72,9 @@ userRouter.post('/register', (req, res) => {
         if (err) console.log(err)
         if (result.length === 0) {
             // 用户名不存在的情况下允许注册
-            db.query('INSERT INTO user(username, password) VALUES(?, ?)', [username, password], (err, result) => {
+            let sql = 'INSERT INTO user(username, password) VALUES(?, ?)'
+            let data = [[username, password]]
+            db.query(sql, data, (err, result) => {
                 if (err) console.log(err)
                 if (result.affectedRows === 1) {
                     res.json({

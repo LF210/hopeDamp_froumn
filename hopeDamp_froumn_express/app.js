@@ -1,3 +1,9 @@
+/*
+ * @Author: LF
+ * @Description:
+ * @Date: 2020-10-21 08:38:38
+ * @LastEditTime: 2020-10-24 09:55:20
+ */
 // 引入express包
 const express = require('express')
 // 创建服务器
@@ -56,52 +62,50 @@ app.post('/api/v1/roomMsg', (req, res) => {
         var send_user_id = tokenVerify(req.headers.token)
     }
     let [room_id, value, create_time, collect_user_id] = [req.body.room_id, req.body.value, req.body.create_time, req.body.collect_user_id]
-    // 如果用户未连接到socket服务器,则代表其未上线,则不能对其发消息
-    if (!userArr[collect_user_id]) {
-        return res.json({
-            ok: 0,
-            msg: '该用户不在线,不能发送信息!'
+    // ------------------------------------------------
+    // 执行sql语句,插入聊天数据（消息默认是未被接收方查收）
+    let sql = 'INSERT INTO private_chat(room_id, value, create_time, send_user_id, collect_user_id,is_seen) VALUES(?,?,?,?,?,0);select last_insert_id()'
+    let data = [room_id, value, create_time, send_user_id, collect_user_id]
+    let chat_id = null
+    db.query(sql, data, (err, result) => {
+        if (err) console.log(err)
+        // 获取刚刚创建的聊天房间的房间id
+        for (let key in result[1][0]) {
+            chat_id = result[1][0][key]
+        }
+        res.json({
+            ok: 1
+        })
+    })
+    // 如果用户在线
+    if (userArr[collect_user_id]) {
+        // 查询发送者的信息,并返回给接受消息的人
+        let sql = 'SELECT id,username,avatar FROM user WHERE id = ?'
+        let data = [send_user_id]
+        db.query(sql, data, (err, result) => {
+            if (err) console.log(err)
+            // 发送消息用于进入我的消息页时自动打开与发消息的人对话
+            userArr[collect_user_id].emit('message', {
+                id: result[0].id,
+                username: result[0].username,
+                avatar: result[0].avatar,
+                room_id
+            })
+            // 发送最新的消息
+            userArr[collect_user_id].emit('value', {
+                id: chat_id,
+                value,
+                create_time,
+                username: result[0].username,
+                avatar: result[0].avatar,
+                user_id: send_user_id
+            })
         })
     }
-    // 执行sql语句,插入聊天数据,同时提醒接受消息用户,有新消息
-    db.query(
-        `INSERT INTO private_chat(room_id, value, create_time, send_user_id, collect_user_id) VALUES('${room_id}','${value}','${create_time}','${send_user_id}','${collect_user_id}');select last_insert_id()`,
-        (err, result) => {
-            if (err) console.log(err)
-            let chat_id = null
-            // 获取刚刚创建的聊天房间的房间id
-            for (let key in result[1][0]) {
-                chat_id = result[1][0][key]
-            }
-            res.json({
-                ok: 1
-            })
-            // 查询发送者的信息,并返回给接受消息的人
-            db.query(`SELECT id,username,avatar FROM user WHERE id = ${send_user_id}`, (err, result) => {
-                if (err) console.log(err)
-                // 发送消息用于进入我的消息页时自动打开与发消息的人对话
-                userArr[collect_user_id].emit('message', {
-                    id: result[0].id,
-                    username: result[0].username,
-                    avatar: result[0].avatar,
-                    room_id
-                })
-                // 发送最新的消息
-                userArr[collect_user_id].emit('value', {
-                    id: chat_id,
-                    value,
-                    create_time,
-                    username: result[0].username,
-                    avatar: result[0].avatar,
-                    user_id: send_user_id
-                })
-            })
-        }
-    )
 })
 
 // 开启socket服务器
-http.listen(socket_port, function () {
+http.listen(socket_port, () => {
     console.log('socket server is running...')
 })
 // 开启express服务器

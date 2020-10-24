@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 版头
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-23 09:35:46
+ * @LastEditTime: 2020-10-24 10:28:42
  */
 import React, { Component } from 'react'
 import jwt from 'jsonwebtoken'
@@ -96,7 +96,7 @@ export default class top extends Component {
                 </Menu.Item>
                 <Menu.Item
                     onClick={() => {
-                        sessionStorage.removeItem('token')
+                        sessionStorage.clear()
                         window.location.href = '/'
                     }}
                 >

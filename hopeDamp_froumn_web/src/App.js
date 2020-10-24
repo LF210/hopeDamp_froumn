@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 根路由页
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-23 09:58:17
+ * @LastEditTime: 2020-10-24 09:10:26
  */
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
