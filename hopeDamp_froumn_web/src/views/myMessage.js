@@ -2,7 +2,7 @@
  * @Author: LF
  * @Description: 我的消息页
  * @Date: 2020-10-21 08:38:38
- * @LastEditTime: 2020-10-24 17:10:51
+ * @LastEditTime: 2020-10-25 16:31:55
  */
 /* eslint-disable */
 import React, { Component } from 'react'
@@ -94,7 +94,6 @@ export default class myMessage extends Component {
         // 获取所有历史聊天用户
         axios.get('/room').then(({ data: res }) => {
             if (res.ok === 1) {
-                console.log(res)
                 // 同步数据
                 this.setState({
                     historyChatUser: res.data
@@ -124,6 +123,8 @@ export default class myMessage extends Component {
                 chatingUser: data
             },
             () => {
+                // 将切换到的聊天房间未读消息清空
+                this.state.historyChatUser[index].not_seen_num = 0
                 // 重新获取聊天历史数据
                 this.getChatHistoryMsg(this.state.chatingUser.room_id)
                 // 将发送消息按钮解禁，并清空聊天框
@@ -148,7 +149,7 @@ export default class myMessage extends Component {
 
     // 发送消息
     sendMsg = async () => {
-        // 不能发送空消息
+        // 表单校验
         if (document.querySelector('.w-e-text').innerHTML === '<p><br></p>') {
             return message.error('不能发送空消息！')
         }
@@ -192,6 +193,7 @@ export default class myMessage extends Component {
                             {!item.avatar && <img style={{ width: '30px', height: '30px' }} className="user-avatar" src={require('../static/images/empty-avatar.png')} alt="" />}
                         </div>
                         <div className="chatUserBox-username">{item.username}</div>
+                        {item.not_seen_num > 0 && <div className="chatNotSeenMsgNum">{item.not_seen_num}</div>}
                     </div>
                 )
             })

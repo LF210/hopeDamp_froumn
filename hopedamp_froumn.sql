@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50731
+ Source Server Version : 50725
  Source Host           : localhost:3306
  Source Schema         : hopedamp_froumn
 
  Target Server Type    : MySQL
- Target Server Version : 50731
+ Target Server Version : 50725
  File Encoding         : 65001
 
- Date: 21/10/2020 17:49:38
+ Date: 25/10/2020 16:41:16
 */
 
 SET NAMES utf8mb4;
@@ -50,7 +50,7 @@ CREATE TABLE `comment`  (
   `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论内容',
   `create_time` datetime(0) NOT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for private_chat
@@ -63,47 +63,9 @@ CREATE TABLE `private_chat`  (
   `create_time` datetime(0) NOT NULL COMMENT '消息创建时间',
   `send_user_id` int(10) UNSIGNED NOT NULL COMMENT '消息发送人ID',
   `collect_user_id` int(10) UNSIGNED NOT NULL COMMENT '消息接收人ID',
+  `is_seen` int(10) NOT NULL COMMENT '消息是否已查收',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 136 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of private_chat
--- ----------------------------
-INSERT INTO `private_chat` VALUES (1, 1, '<p>哈喽</p>', '2020-03-06 16:02:42', 7, 1);
-INSERT INTO `private_chat` VALUES (2, 1, '<p>下午好</p>', '2020-03-06 16:03:04', 1, 7);
-INSERT INTO `private_chat` VALUES (3, 1, '<p>可以兄弟，很秀</p>', '2020-03-06 16:03:26', 7, 1);
-INSERT INTO `private_chat` VALUES (4, 1, '<p>一般一般</p>', '2020-03-06 16:04:00', 1, 7);
-INSERT INTO `private_chat` VALUES (5, 1, '<p><img src=\"http://wclt-lf.oss-cn-hangzhou.aliyuncs.com/my_froumn/assassins_creed_artwork_full_hd-wallpaper-1920x1080.jpg\" style=\"max-width:30%;\"><br></p><p>加入我大兄弟会吧！</p>', '2020-03-06 17:44:24', 1, 7);
-INSERT INTO `private_chat` VALUES (6, 1, '<p>66666</p>', '2020-03-06 17:47:11', 7, 1);
-INSERT INTO `private_chat` VALUES (7, 1, '<p>牛逼</p>', '2020-03-06 18:28:56', 7, 1);
-INSERT INTO `private_chat` VALUES (8, 1, '<p><img src=\"http://wclt-lf.oss-cn-hangzhou.aliyuncs.com/my_froumn/20200223172052.jpg\" style=\"max-width:30%;\"><br></p>', '2020-03-06 18:29:29', 7, 1);
-INSERT INTO `private_chat` VALUES (9, 3, '<p>哈喽</p>', '2020-03-06 18:31:19', 7, 9);
-INSERT INTO `private_chat` VALUES (10, 3, '<p>在吗</p>', '2020-03-06 18:31:56', 7, 9);
-INSERT INTO `private_chat` VALUES (11, 5, '<p>???</p>', '2020-03-06 18:45:34', 9, 7);
-INSERT INTO `private_chat` VALUES (12, 1, '<p>帅气<img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/33/2018new_xixi_thumb.png\" alt=\"[嘻嘻]\" data-w-e=\"1\" style=\"font-size: 16px;\"></p>', '2020-03-06 18:47:04', 1, 7);
-INSERT INTO `private_chat` VALUES (13, 5, '<p>牛逼</p>', '2020-03-06 18:47:22', 1, 9);
-INSERT INTO `private_chat` VALUES (14, 3, '<p>zai&nbsp;</p>', '2020-03-06 18:47:50', 9, 1);
-INSERT INTO `private_chat` VALUES (15, 3, '<p>666</p>', '2020-03-06 19:04:16', 9, 7);
-INSERT INTO `private_chat` VALUES (16, 6, '<p>哈喽，在吗？</p>', '2020-03-06 19:12:05', 10, 9);
-INSERT INTO `private_chat` VALUES (17, 6, '<p>吃饭喽<img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/fa/2018new_chanzui_org.png\" alt=\"[馋嘴]\" data-w-e=\"1\" style=\"font-size: 16px;\"></p>', '2020-03-06 19:14:56', 9, 10);
-INSERT INTO `private_chat` VALUES (18, 6, '<p>666</p>', '2020-03-06 19:15:03', 9, 10);
-INSERT INTO `private_chat` VALUES (19, 5, '<p>1234</p>', '2020-03-06 19:15:10', 9, 7);
-INSERT INTO `private_chat` VALUES (20, 3, '<p>6666</p>', '2020-03-06 19:15:12', 9, 1);
-INSERT INTO `private_chat` VALUES (21, 6, '<p>？？？</p>', '2020-03-06 19:56:18', 9, 10);
-INSERT INTO `private_chat` VALUES (22, 6, '<p><img src=\"http://wclt-lf.oss-cn-hangzhou.aliyuncs.com/my_froumn/21d7aec27d1ed21bbb5f79d0a06eddc451da3f30.jpg\" style=\"max-width:100%;\"><br></p>', '2020-03-06 20:06:34', 9, 10);
-INSERT INTO `private_chat` VALUES (23, 6, '<p>BUG终于改好了！</p>', '2020-03-06 21:57:32', 10, 9);
-INSERT INTO `private_chat` VALUES (24, 3, '<p>页面写完了，到socket连接了</p>', '2020-03-06 22:02:51', 7, 9);
-INSERT INTO `private_chat` VALUES (25, 19, '<p>哈喽，3月7号了</p>', '2020-03-07 16:01:57', 7, 10);
-INSERT INTO `private_chat` VALUES (26, 3, '<p>？？？</p>', '2020-03-07 16:37:57', 7, 9);
-INSERT INTO `private_chat` VALUES (27, 3, '<p>nb</p>', '2020-03-07 16:42:39', 7, 9);
-INSERT INTO `private_chat` VALUES (34, 3, '<p>???<br></p>', '2020-03-08 23:31:15', 9, 7);
-INSERT INTO `private_chat` VALUES (59, 3, '<p>早上好<br></p>', '2020-03-09 08:54:36', 9, 7);
-INSERT INTO `private_chat` VALUES (60, 3, '<p>你好</p>', '2020-03-09 08:55:27', 7, 9);
-INSERT INTO `private_chat` VALUES (61, 3, '<p>666<br></p>', '2020-03-09 08:56:49', 9, 7);
-INSERT INTO `private_chat` VALUES (66, 19, '<p>现在是3月9号咯</p>', '2020-03-09 09:03:58', 7, 10);
-INSERT INTO `private_chat` VALUES (133, 3, '<p><img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/a3/2018new_heixian_thumb.png\" alt=\"[黑线]\" data-w-e=\"1\"><br></p>', '2020-03-09 16:57:05', 7, 9);
-INSERT INTO `private_chat` VALUES (134, 3, '<img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/1e/2018new_taikaixin_org.png\" alt=\"[太开心]\" data-w-e=\"1\">', '2020-03-09 16:57:35', 9, 7);
-INSERT INTO `private_chat` VALUES (135, 3, '<p><img src=\"http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/8f/2018new_haha_thumb.png\" alt=\"[哈哈]\" data-w-e=\"1\"><br></p>', '2020-03-09 16:57:40', 7, 9);
+) ENGINE = InnoDB AUTO_INCREMENT = 152 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for private_room
@@ -114,16 +76,7 @@ CREATE TABLE `private_room`  (
   `user_id_A` int(11) NOT NULL COMMENT '私聊用户A的ID',
   `user_id_B` int(11) NOT NULL COMMENT '私聊用户B的ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of private_room
--- ----------------------------
-INSERT INTO `private_room` VALUES (1, 7, 1);
-INSERT INTO `private_room` VALUES (3, 7, 9);
-INSERT INTO `private_room` VALUES (5, 9, 1);
-INSERT INTO `private_room` VALUES (6, 9, 10);
-INSERT INTO `private_room` VALUES (19, 7, 10);
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for record
@@ -137,13 +90,7 @@ CREATE TABLE `record`  (
   `username` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录用户名',
   `login_time` datetime(0) NOT NULL COMMENT '登录时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of record
--- ----------------------------
-INSERT INTO `record` VALUES (9, '112.91.122.239', '广东省', '梅州市', '980782615', '2020-10-21 16:50:42');
-INSERT INTO `record` VALUES (10, '112.91.122.239', '广东省', '梅州市', '980782615', '2020-10-21 17:26:52');
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for topic

@@ -93,39 +93,32 @@ chatRouter.get('/room', (req, res) => {
                     delete v.user_id_A
                 }
             })
+            // 用来存储所有聊天对象的id的数组
             let userIdArr = []
+            // 循环将所有聊天对象id填充到数组中
             result.forEach((v) => {
                 userIdArr.push(parseInt(v.user_id))
             })
-            let data = {
+            // 最终返回结果
+            let handle_data = {
                 ok:1,
                 data:[]
             }
+            // 将所有聊天对象的id，用户名，头像，与该聊天对象的聊天房间id，未读消息数查询出来
             for (let value of userIdArr) {
-                db.query(`SELECT id,username,avatar FROM user WHERE id = ${value};SELECT COUNT(*) AS zs FROM private_chat WHERE send_user_id = ${value} AND collect_user_id = ${id} AND is_seen = 0`,(err,result)=>{
+                db.query(`SELECT id,username,avatar FROM user WHERE id = ${value};SELECT COUNT(*) AS zs FROM private_chat WHERE send_user_id = ${value} AND collect_user_id = ${id} AND is_seen = 0;SELECT room_id FROM private_chat WHERE send_user_id = ${value} AND collect_user_id = ${id}`,(err,result)=>{
                     if(err) console.log(err)
-                    console.log(result[0][0])
-                    
+                    let obj = result[0][0]
+                    obj.not_seen_num = result[1][0].zs
+                    obj.room_id = result[2][0].room_id
+                    handle_data.data.push(obj)
                 })
             }
-            // SELECT COUNT(*) FROM private_chat WHERE send_user_id in (${userIdArr}) AND collect_user_id = ${id} AND is_seen = 0
-            // 批量获取所有与自己聊过天的用户信息
-            // db.query(`SELECT id,username,avatar FROM user WHERE id in (${userIdArr});`, (err, data) => {
-            //     if (err) console.log(err)
-            //     // 将房间ID加到对应的用户数据上
-            //     data.forEach((v) => {
-            //         for (var key in result) {
-            //             if (result[key].user_id === v.id) {
-            //                 v.room_id = result[key].room_id
-            //             }
-            //         }
-            //     })
-            //     // 返回结果
-            //     res.json({
-            //         ok: 1,
-            //         data
-            //     })
-            // })
+            // 等待异步完成（db.query是异步）
+            setTimeout(() => {
+                // 返回结果
+                res.json(handle_data)
+            }, 10);
         } else {
             // 没有任何聊天记录的情况
             res.json({
