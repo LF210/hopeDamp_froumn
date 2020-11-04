@@ -94,15 +94,12 @@ export default class home extends Component {
         return (
             <div>
                 <div className="center-nav">
-                    <div className="center-nav-left">
-                        <ul className="froumn-ul-box">{froumnData}</ul>
-                        {this.state.total !== 0 && (
-                            <div className="pagination-box">
-                                <Pagination total={this.state.total} pageSize={this.state.pageSize} defaultCurrent={this.state.pageNum} onChange={this.changePage} />
-                            </div>
-                        )}
-                    </div>
-                    <div className="center-nav-right"></div>
+                    <ul className="froumn-ul-box">{froumnData}</ul>
+                    {this.state.total !== 0 && (
+                        <div className="pagination-box">
+                            <Pagination total={this.state.total} pageSize={this.state.pageSize} defaultCurrent={this.state.pageNum} onChange={this.changePage} />
+                        </div>
+                    )}
                 </div>
             </div>
         )

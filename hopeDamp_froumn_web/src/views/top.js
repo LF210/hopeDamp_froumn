@@ -17,7 +17,8 @@ export default class top extends Component {
         this.state = {
             userData: {},
             web_title: '望潮论坛',
-            classify: []
+            classify: [],
+            flag: false
         }
     }
 
@@ -63,6 +64,41 @@ export default class top extends Component {
             })
         }
     }
+
+    // 展开/收起下拉列表
+    changeStyle = () => {
+        if (!this.state.flag) {
+            this.unfoldList()
+        } else {
+            this.shrinkList()
+        }
+        this.setState({
+            flag: !this.state.flag
+        })
+    }
+
+    // 展开列表
+    unfoldList = () => {
+        let lines = document.querySelectorAll('.line')
+        let list = document.querySelector('.list')
+        lines[0].style.transform = 'rotate(45deg)'
+        lines[0].style.top = '44%'
+        lines[1].style.display = 'none'
+        lines[2].style.transform = 'rotate(-45deg)'
+        lines[2].style.top = '-48%'
+        list.style.maxHeight = 1000 + 'px'
+    }
+
+    // 收起列表
+    shrinkList = () => {
+        let lines = document.querySelectorAll('.line')
+        let list = document.querySelector('.list')
+        lines[0].style.transform = lines[2].style.transform = 'none'
+        lines[0].style.top = lines[2].style.top = 0
+        lines[1].style.display = 'block'
+        list.style.maxHeight = 0
+    }
+
     render() {
         const menu = (
             <Menu>
@@ -110,6 +146,7 @@ export default class top extends Component {
                 <li
                     key={index}
                     onClick={() => {
+                        this.changeStyle()
                         window.location.href = '/' + item.id
                     }}
                 >
@@ -124,44 +161,102 @@ export default class top extends Component {
                         <img alt="logo" src={require('../static/images/logo.png')} />
                         <span>{this.state.web_title || '望潮论坛'}</span>
                     </a>
-                    <div className="collapse">
-                        <ul>{classify}</ul>
-                    </div>
-                    <div className="user-operation">
-                        <div
-                            onClick={() => {
-                                window.location.href = '/publish'
-                            }}
-                            className="publish-news apple-font"
-                        >
-                            发布新话题
+                    <div className="pc-area">
+                        <div className="collapse">
+                            <ul>{classify}</ul>
                         </div>
-                        <ul style={{ marginLeft: '10px' }}>
-                            {!sessionStorage.getItem('token') && (
-                                <>
-                                    <li>
-                                        <a href="/register">注册</a>
-                                    </li>
-                                    <li>
-                                        <a href="/login">登录</a>
-                                    </li>
-                                </>
-                            )}
-                            {sessionStorage.getItem('token') && (
-                                <>
-                                    <Dropdown overlay={menu} trigger={['click']}>
-                                        <li style={{ display: 'flex', alignItems: 'center' }}>
-                                            {!this.state.userData.avatar && (
-                                                <img style={{ width: '30px', height: '30px' }} className="user-avatar" src={require('../static/images/empty-avatar.png')} alt="" />
-                                            )}
-                                            {this.state.userData.avatar && <img className="user-avatar" src={this.state.userData.avatar} alt="" />}
-                                            {jwt.decode(sessionStorage.getItem('token')).username}
-                                            <Icon style={{ marginLeft: '5px' }} type="caret-down" />
+                        <div className="user-operation">
+                            <div
+                                onClick={() => {
+                                    window.location.href = '/publish'
+                                }}
+                                className="publish-news apple-font"
+                            >
+                                发布新话题
+                            </div>
+                            <ul style={{ marginLeft: '10px' }}>
+                                {!sessionStorage.getItem('token') && (
+                                    <>
+                                        <li>
+                                            <a href="/register">注册</a>
                                         </li>
-                                    </Dropdown>
-                                </>
-                            )}
-                        </ul>
+                                        <li>
+                                            <a href="/login">登录</a>
+                                        </li>
+                                    </>
+                                )}
+                                {sessionStorage.getItem('token') && (
+                                    <>
+                                        <Dropdown overlay={menu} trigger={['click']}>
+                                            <li style={{ display: 'flex', alignItems: 'center' }}>
+                                                {!this.state.userData.avatar && (
+                                                    <img
+                                                        style={{ width: '30px', height: '30px' }}
+                                                        className="user-avatar"
+                                                        src={require('../static/images/empty-avatar.png')}
+                                                        alt=""
+                                                    />
+                                                )}
+                                                {this.state.userData.avatar && <img className="user-avatar" src={this.state.userData.avatar} alt="" />}
+                                                {jwt.decode(sessionStorage.getItem('token')).username}
+                                                <Icon style={{ marginLeft: '5px' }} type="caret-down" />
+                                            </li>
+                                        </Dropdown>
+                                    </>
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="mobile-area">
+                        <div className="button" onClick={this.changeStyle}>
+                            <div className="line line1"></div>
+                            <div className="line line2"></div>
+                            <div className="line line3"></div>
+                        </div>
+                        <div className="list">
+                            <ul>{classify}</ul>
+                            <div className="user-operation">
+                                <div
+                                    onClick={() => {
+                                        window.location.href = '/publish'
+                                    }}
+                                    className="publish-news apple-font"
+                                >
+                                    发布新话题
+                                </div>
+                                <ul style={{ margin: '10px 0px' }}>
+                                    {!sessionStorage.getItem('token') && (
+                                        <>
+                                            <li>
+                                                <a href="/register">注册</a>
+                                            </li>
+                                            <li>
+                                                <a href="/login">登录</a>
+                                            </li>
+                                        </>
+                                    )}
+                                    {sessionStorage.getItem('token') && (
+                                        <>
+                                            <Dropdown overlay={menu} trigger={['click']}>
+                                                <li style={{ display: 'flex', alignItems: 'center' }}>
+                                                    {!this.state.userData.avatar && (
+                                                        <img
+                                                            style={{ width: '30px', height: '30px' }}
+                                                            className="user-avatar"
+                                                            src={require('../static/images/empty-avatar.png')}
+                                                            alt=""
+                                                        />
+                                                    )}
+                                                    {this.state.userData.avatar && <img className="user-avatar" src={this.state.userData.avatar} alt="" />}
+                                                    {jwt.decode(sessionStorage.getItem('token')).username}
+                                                    <Icon style={{ marginLeft: '5px' }} type="caret-down" />
+                                                </li>
+                                            </Dropdown>
+                                        </>
+                                    )}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

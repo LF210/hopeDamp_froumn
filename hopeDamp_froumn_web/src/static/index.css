@@ -8,10 +8,12 @@
 /* 主轴 */
 .container {
     display: flex;
-    width: 1140px;
+    width: 840px;
     height: 100%;
     margin: 0px auto;
     align-items: center;
+    transition: 0.5s;
+    position: relative;
 }
 
 /* 苹果字体 */
@@ -82,7 +84,7 @@
 }
 
 .user-operation {
-    margin: 0 120px 0 auto;
+    margin-left: auto;
 }
 
 .publish-news {
@@ -99,22 +101,16 @@
 
 /* 注册登陆区域-start */
 .center-nav {
-    width: 1140px;
+    width: 840px;
     margin: 0px auto;
     display: flex;
+    flex-direction: column;
+    transition: 0.5s;
 }
 
 .center-nav > div {
     height: 100%;
     padding: 0px 10px;
-}
-
-.center-nav-left {
-    width: 66%;
-}
-
-.center-nav-right {
-    width: 33%;
 }
 
 .user-handle-box {
@@ -157,7 +153,7 @@
     background-color: #fff;
 }
 
-.pagination-box {
+.center-nav > .pagination-box {
     background-color: #f7f7f7;
     padding: 12px 20px;
 }
@@ -565,16 +561,19 @@ img[data-w-e] {
     cursor: pointer;
     display: flex;
     align-items: center;
+    padding-right: 5px;
 }
 .chatNotSeenMsgNum {
     margin-left: auto;
+    margin-bottom: auto;
     border-radius: 50%;
     background-color: #f00;
     color: #fff;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    font-size: 12px;
+    height: 15px;
     text-align: center;
-    line-height: 20px;
+    line-height: 15px;
 }
 .chat-view {
     width: 100%;
@@ -649,4 +648,114 @@ img[data-w-e] {
 .bottom-box > div {
     width: 100%;
     height: 100%;
+}
+.pc-area {
+    width: 80%;
+    display: flex;
+    align-items: center;
+}
+.mobile-area {
+    display: none;
+    margin-left: auto;
+}
+.button {
+    width: 25px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.button > .line {
+    width: 100%;
+    height: 2px;
+    background-color: #2db5a3;
+    position: relative;
+    transition: 0.5s;
+}
+.list {
+    position: absolute;
+    transition: 0.5s;
+    max-height: 0px;
+    width: 100%;
+    top: 60px;
+    left: 0px;
+    background-color: #343a40;
+    color: rgba(255, 255, 255, 0.5);
+    padding-left: 16px;
+    z-index: 100;
+    overflow: hidden;
+}
+.list ul {
+    width: 100%;
+    flex-direction: column;
+}
+.list ul > li {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+.list ul > li:hover {
+    color: #c3ceb8;
+}
+.list ul > li > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.list ul > li > a:hover {
+    color: #c3ceb8;
+}
+.chat-box-center {
+    flex-direction: row;
+}
+.chat-box-center > .center-nav-left {
+    width: 75%;
+}
+@media screen and (max-width: 870px) {
+    .center-nav {
+        width: 95%;
+    }
+    .container {
+        width: 100%;
+        padding: 0px 10px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .pc-area {
+        display: none;
+    }
+    .mobile-area {
+        display: block;
+    }
+    .user-operation {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .user-operation > ul > li {
+        margin: 0px;
+    }
+    .publish-news {
+        margin-left: -5px;
+    }
+    .center-nav {
+        margin-bottom: 20px;
+    }
+    .chat-box-center {
+        flex-direction: column-reverse;
+    }
+    .chat-box > .chat-box-center > .center-nav-right {
+        margin-left: 0px;
+        width: auto;
+        min-height: auto;
+    }
+    .chat-box-center > .center-nav-left {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .chatNotSeenMsgNum {
+        margin-bottom: 0px;
+    }
 }

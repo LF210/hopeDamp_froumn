@@ -245,7 +245,7 @@ export default class myMessage extends Component {
         }
         return (
             <div className="chat-box">
-                <div className="center-nav">
+                <div className="center-nav chat-box-center">
                     <div className="center-nav-left">
                         {this.state.chatingUser && (
                             <h2>
