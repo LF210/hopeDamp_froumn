@@ -1,24 +1,31 @@
-# 望潮论坛
+# hopeDamp_froumn
 
-#### 介绍
-这是一个以React + NodeJs为核心搭建的小型论坛系统，功能尚在健全
+#### introduce
 
-#### 软件架构
-前端：React
+This is a small forum system built with React + NodeJs as the core, the functions are still in perfect
 
-后端：NodeJs + Express
+#### framework
 
-数据库：Mysql
+front-end：React
 
-#### 文件结构
+Back-end：NodeJs + Express
 
-hopeDamp_froumn_express: 后端项目文件夹
+database：Mysql
 
-hopeDamp_froumn_web: 前端项目文件夹
+#### file structure
 
-#### 启动项目
+hopeDamp_froumn_express: Back-end file
 
-* 使用Mysql 5.7 创建数据库（名称：hopedamp_froumn，字符集：`UTF8mb4`）并将项目根目录下的hopedamp_froumn.sql 文件导入到数据库中
-* 进入hopeDamp_froumn_express文件夹根目录，打开控制台执行`npm install`下包，然后使用`node app.js`、`nodemon app.js`、`pm2 app.js`等命令启动后端项目
-* 进入hopeDamp_froumn_web文件夹根目录，打开控制台执行`npm install`下包，然后使用`npm run start` 命令启动前端项目
-* 打开浏览器，地址栏输入locaohost:3000进入项目首页
+hopeDamp_froumn_web: front-end file
+
+#### Get Start
+
+##### 	environmental requirement
+  * Mysql 5.7
+  * NodeJs
+  * Npm
+##### starting procedure
+* use Mysql 5.7 to create a database named `hopeDamp_froumn` character set `UTF8MB4`, then import data from `hopeDamp_froumn/hopedamp_froumn.sql`
+* `cd hopeDamp_froumn_express` and run `npm i `, then run `node app.js`
+* `cd hopeDamp_froumn_web ` and run `npm i`, then run `npm run start`
+* open browser and enter localhost:3000 to see this project
