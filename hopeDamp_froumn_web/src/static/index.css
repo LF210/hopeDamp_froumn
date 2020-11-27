@@ -8,7 +8,7 @@
 /* 主轴 */
 .container {
     display: flex;
-    width: 840px;
+    width: 50%;
     height: 100%;
     margin: 0px auto;
     align-items: center;
