@@ -61,9 +61,9 @@ uploadRouter.post('/uploadImg', upload.single('file'), (req, res) => {
 })
 // 创建OSS对象
 let client = new OSS({
-    region: 'oss-cn-hangzhou', //阿里云对象存储地域名
-    accessKeyId: 'LTAI4Fpsq6rFA3fHhJjw9Z95', //api接口id
-    accessKeySecret: 'tHTyr3FTMXb5Rh9S6Anz1eqozHzUgD' //api接口密码
+    region: '', //阿里云对象存储地域名
+    accessKeyId: '', //api接口id
+    accessKeySecret: '' //api接口密码
 })
 //使用的存储桶名
 client.useBucket('wclt-lf')
